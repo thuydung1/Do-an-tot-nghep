@@ -1,0 +1,113 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ KHÁCH HÀNG </h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="createNew()">+ Thêm</button>
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form name="userForm" ng-submit="submitForm()" novalidate>
+              <div class="card-body">
+                <form class="forms-sample">
+                  <div class="form-group">
+                    <label for="id_KH" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_KH" id="id_KH" ng-model="id_KH" ng-disabled=disabled><br>
+                      </div>
+                  <div class="form-group">
+                    <label for="tenKH">Tên Khách Hàng</label>
+                    <input type="text" class="form-control" name="tenKH" ng-model="tenKH"
+                      id="tenKH" ng-required=true />
+                    <span class="error" ng-show="userForm.tenKH.$error.required">Vui lòng nhập tên!</span>
+                    <span class="valid" ng-show="userForm.tenKH.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="sdtKH">Số Điện Thoại</label>
+                    <input type="text" class="form-control" name="sdtKH" ng-model="sdtKH"
+                      id="sdtKH" ng-required=true />
+                    <span class="error" ng-show="userForm.sdtKH.$error.required">Vui lòng nhập số điện thoại!</span>
+                    <span class="valid" ng-show="userForm.sdtKH.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="diachiKH">Địa Chỉ </label>
+                    <input type="text" class="form-control" name="diachiKH" ng-model="diachiKH"
+                      id="diachiKH" ng-required=true />
+                    <span class="error" ng-show="userForm.diachiKH.$error.required">Vui lòng nhập địa chỉ!</span>
+                    <span class="valid" ng-show="userForm.diachiKH.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="stkKH">Số Tài Khoản</label>
+                    <input type="text" class="form-control" name="stkKH" ng-model="stkKH"
+                      id="stkKH"  ng-required=true />
+                    <span class="error" ng-show="userForm.stkKH.$error.required">Vui lòng nhập
+                      Số Tài Khoản!</span>
+                    <span class="valid" ng-show="userForm.stkKH.$valid">Hợp Lệ</span>
+                    </div>
+                <button type="submit" class="btn btn-primary"  ng-disabled="userForm.$invalid" data-dismiss="{{save1}}" 
+                ng-click="addkhachhang(id_KH,tenKH,sdtKH,diachiKH,stkKH)">Thêm</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateKH(id_KH,tenKH,sdtKH,diachiKH,stkKH)">LƯU</button>
+                </form>
+              </div>
+            </form>
+            </div>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+            <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+          </div> -->
+        </div>
+      </div>
+  </div>
+<div class="table-responsive">
+<table class="table table-bordered border-warning" id="accordion">
+  <thead>
+    <tr class="table-info">
+      <th scope="col">ID</th>
+      <th scope="col">Tên Khách Hàng</th>
+      <th scope="col">Số Điện Thoại</th>
+      <th colspan="3" scope="col"></th>
+  </tr>
+</thead>
+<tbody ng-repeat="x in khachhangs | orderBy: 'id_KH' | filter: search"> 
+  <!--  sua cai ng-repeat owrw trên . thay sau in -->
+  <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_KH}}" aria-expanded="true" aria-controls="{{x.id_KH}}">
+    <td>{{x.id_KH}}</td>
+    <td>{{x.tenKH}}</td>
+    <td>{{x.sdtKH}}</td>
+    <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editkhachhang(x)"><i class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+    <td class="text-center"><button ng-click="deletekhachhang(x)"><i class="fas fa-trash-alt bg-danger p-2 text-white rounded" ></i></button></td>
+  </tr>
+  <tr id="{{x.id_KH}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+    <td colspan="9">
+      <table width="100%">
+          <tr>
+            <th scope="col" style="width: 50%">ID Khách Hàng</th>
+            <td>{{x.id_KH}}</td>
+          </tr>
+          <tr>
+            <th scope="col" style="width: 50%">Tên Khách Hàng</th>
+            <td>{{x.tenKH}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Điện Thoại</th>
+            <td>{{x.sdtKH}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Địa Chỉ</th>
+            <td>{{x.diachiKH}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Tài Khoản</th>
+            <td>{{x.stkKH}}</td>
+          </tr>
+      </table>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>

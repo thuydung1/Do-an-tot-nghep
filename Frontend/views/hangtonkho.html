@@ -1,0 +1,93 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ HÀNG TỒN KHO</h3>
+<hr>
+<div class="modal fade" id="showDetailModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form class="forms-sample">
+            <div class="form-group">
+              <label for="tenSP" class="col-form-label">Tên sản phẩm</label>
+              <input type="text" class="form-control" name="id_SP" id="tenSP" ng-model="tenSP" ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="ngaysx_SP" class="col-form-label">Ngày sản xuất</label>
+              <input type="text" class="form-control" name="ngaysx_SP" id="ngaysx_SP" ng-model="ngaysx_SP"
+                ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="hansd_SP" class="col-form-label">Hạn sử dụng</label>
+              <input type="text" class="form-control" name="hansd_SP" id="hansd_SP" ng-model="hansd_SP"
+                ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="giaban_SP" class="col-form-label">Giá bán sp</label>
+              <input type="text" class="form-control" name="giaban_SP" id="giaban_SP" ng-model="giaban_SP"
+                ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="soluong_SP" class="col-form-label">Số lượng</label>
+              <input type="text" class="form-control" name="soluong_SP" id="soluong_SP" ng-model="soluong_SP"
+                ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="nhacungcap" class="col-form-label">Nhà cung cấp</label>
+              <input type="text" class="form-control" name="soluong_SP" id="nhacungcap" ng-model="nhacungcap"
+                ng-disabled=disabled>
+            </div>
+            <div class="form-group">
+              <label for="phanloai" class="col-form-label">Phân loại sản phẩm</label>
+              <input type="text" class="form-control" name="phanloai" id="phanloai" ng-model="phanloai"
+                ng-disabled=disabled>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+        <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+      </div> -->
+</div>
+</div>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered border-warning" id="accordion">
+    <thead>
+      <tr class="table-info"></tr>
+      <th scope="col">STT</th>
+      <th scope="col">Tên Sản Phẩm</th>
+      <th scope="col">Ngày Nhập</th>
+      <th scope="col">Số lượng</th>
+      <th scope="col">Tổng số tồn kho</th>
+      </tr>
+    </thead>
+    <tbody">
+      <tr ng-repeat-start="x in hangTonKho">
+        <td rowspan="{{x.productDtoList.length}}">{{$index+1}}</td>
+        <td rowspan="{{x.productDtoList.length}}">
+          <button data-toggle="modal" data-target="#showDetailModal"
+            ng-click="showDetailModal(x.product)">{{x.product.tenSP}}</button></td>
+        <td>{{x.productDtoList[0].ngayNhap}}</td>
+        <td>{{x.productDtoList[0].amount}}</td>
+        <td rowspan="{{x.productDtoList.length}}">{{x.totalAmount}}</td>
+      </tr>
+      <tr ng-repeat="productDto in x.productDtoList" ng-if="!$first" ng-repeat-end>
+        <td>
+          {{productDto.ngayNhap}}
+        </td>
+        <td>
+          {{productDto.amount}}
+        </td>
+      </tr>
+      </tbody>
+  </table>
+</div>

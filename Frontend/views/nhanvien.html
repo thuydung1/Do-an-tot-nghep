@@ -1,0 +1,182 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ NHÂN VIÊN</h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="createBookTitle()">+ Thêm</button>
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form name="userForm" ng-submit="submitForm()" novalidate>
+              <div class="card-body">
+                <form class="forms-sample">
+                  <div class="form-group">
+                    <label for="id_NV" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_NV" id="id_NV" ng-model="id_NV" ng-disabled=disabled ><br>
+                      </div>
+                  <div class="form-group">
+                    <label for="tenNV">Tên Nhân Viên</label>
+                    <input type="text" class="form-control" name="tenNV" ng-model="tenNV"
+                      id="tenNV"ng-required=true />
+                    <span class="error" ng-show="userForm.tenNV.$error.required">Vui lòng nhập tên!</span>
+                    <span class="valid" ng-show="userForm.tenNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="gioitinh">Giới Tính</label>
+                    <input type="text" class="form-control" name="gioitinhNV" ng-model="gioitinhNV"
+                      id="gioitinhNV"ng-required=true />
+                    <span class="error" ng-show="userForm.gioitinhNV.$error.required">Vui lòng nhập
+                      giới tính!</span>
+                    <span class="valid" ng-show="userForm.gioitinhNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="chucvu">Chức Vụ</label>
+                    <input type="text" class="form-control" name="chucvuNV" ng-model="chucvuNV"
+                      id="chucvuNV"  ng-required=true />
+                    <span class="error" ng-show="userForm.chucvuNV.$error.required">Vui lòng nhập
+                      chức vụ!</span>
+                    <span class="valid" ng-show="userForm.chucvuNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label>Ngày Sinh</label>
+                    <input class="form-control" type="date" name="ngaysinhNV" ng-model="ngaysinhNV" ng-required=true>
+                    <span class="error" ng-show="userForm.ngaysinhNV.$error.required">Vui lòng chọn ngày</span>
+                    <span class="valid" ng-show="userForm.ngaysinhNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="cmnd">Chứng Minh Nhân Dân</label>
+                    <input type="text" class="form-control" name="cmndNV" ng-model="cmndNV"
+                      id="cmndNV" ng-required=true />
+                    <span class="error" ng-show="userForm.cmndNV.$error.required">Vui lòng nhập
+                      số!</span>
+                    <span class="valid" ng-show="userForm.cmndNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="quequan">Quê Quán </label>
+                    <input type="text" class="form-control" name="quequanNV" ng-model="quequanNV"
+                      id="quequanNV"  ng-required=true />
+                    <span class="error" ng-show="userForm.quequanNV.$error.required">Vui lòng nhập
+                      quê quán!</span>
+                    <span class="valid" ng-show="userForm.quequanNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="stk">Số Tài Khoản</label>
+                    <input type="text" class="form-control" name="stkNV" ng-model="stkNV"
+                      id="stkNV"  ng-required=true />
+                    <span class="error" ng-show="userForm.stkNV.$error.required">Vui lòng nhập
+                      số tài khoản!</span>
+                    <span class="valid" ng-show="userForm.stkNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="sđt">Số Điện Thoại</label>
+                    <input type="text" class="form-control" name="sdtNV" ng-model="sdtNV"
+                      id="sdtNV"  ng-required=true />
+                    <span class="error" ng-show="userForm.sdtNV.$error.required">Vui lòng nhập
+                      số điện thoại!</span>
+                    <span class="valid" ng-show="userForm.sdtNV.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="diachi">Địa Chỉ</label>
+                    <input type="text" class="form-control" name="diachiNV" ng-model="diachiNV"
+                      id="diachiNV"  ng-required=true />
+                    <span class="error" ng-show="userForm.diachiNV.$error.required">Vui lòng nhập
+                      địa chỉ!</span>
+                    <span class="valid" ng-show="userForm.diachiNV.$valid">Hợp Lệ</span>
+                  </div>
+                <img src="../images/nhanviens/{{hinhAnh}}" style="width:100px;height:108px;"><br><br>
+                <input type="file" id="imgNhanVien" name="imgNhanVien">
+
+                <button type="submit" class="btn btn-primary"  ng-disabled="userForm.$invalid" data-dismiss="{{save1}}" 
+                ng-click="addnhanvien(id_NV,tenNV,gioitinhNV,chucvuNV,ngaysinhNV,cmndNV,quequanNV,stkNV,sdtNV,diachiNV,HinhAnh)">Thêm</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updatenhanvien(id_NV,tenNV,gioitinhNV,chucvuNV,ngaysinhNV,cmndNV,quequanNV,stkNV,sdtNV,diachiNV,HinhAnh)">LƯU</button>
+              </form>
+              </div>
+            </form>
+            </div>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+            <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+          </div> -->
+        </div>
+      </div>
+  </div>
+<div class="table-responsive">
+<table class="table table-bordered border-warning" id="accordion">
+  <thead>
+    <tr class="table-info">
+      <th>Hình ảnh</th>
+      <th scope="col">ID</th>
+      <th scope="col">Tên Nhân Viên</th>
+      <th scope="col">Giới Tính</th>
+      <th scope="col">Chức Vụ</th>
+      <th colspan="3" scope="col"></th>
+  </tr>
+</thead>
+<tbody ng-repeat="x in nhanviens| orderBy: 'id_NV' | filter: search"> 
+  <!--  sua cai ng-repeat owrw trên . thay sau in -->
+  <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_NV}}" aria-expanded="true" aria-controls="{{x.id_NV}}">
+    <td style="width:6.25em;height:6.25em;"><img ng-src="../images/nhanviens/{{x.hinhAnh}}" style="width:6.25em;height:6.25em;"></td><!---->
+    <td>{{x.id_NV}}</td>
+    <td>{{x.tenNV}}</td>
+    <td>{{x.gioitinhNV}}</td>
+    <td>{{x.chucvuNV}}</td>
+    <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editnhanvien(x)"><i class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+    <td class="text-center"><button ng-click="deletenhanvien(x)"><i class="fas fa-trash-alt bg-danger p-2 text-white rounded" ></i></button></td>
+  </tr>
+  <tr id="{{x.id_NV}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+    <td colspan="9">
+      <table width="100%">
+          <tr>
+            <th scope="col" style="width: 50%">ID Nhân Viên</th>
+            <td>{{x.id_NV}}</td>
+          </tr>
+          <tr>
+            <th scope="col" style="width: 50%">Tên Nhân Viên</th>
+            <td>{{x.tenNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Giới Tính </th>
+            <td>{{x.gioitinhNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Chức Vụ</th>
+            <td>{{x.chucvuNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Ngày Sinh</th>
+            <td>{{x.ngaysinhNV | date:'dd-MM-yyyy'}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Chứng Minh Nhân Dân</th>
+            <td>{{x.cmndNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Quê Quán</th>
+            <td>{{x.quequanNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Tài Khoản</th>
+            <td>{{x.stkNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Điện Thoại</th>
+            <td>{{x.sdtNV}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Địa Chỉ</th>
+            <td>{{x.diachiNV}}</td>
+          </tr>
+         
+    
+      </table>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>

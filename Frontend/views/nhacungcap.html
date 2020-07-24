@@ -1,0 +1,113 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ NHÀ CUNG CẤP </h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="createBookTitle()">+ Thêm</button>
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form name="userForm" ng-submit="submitForm()" novalidate>
+              <div class="card-body">
+                <form class="forms-sample">
+                  <div class="form-group">
+                    <label for="id_NCC" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_NCC" id="id_NCC" ng-model="id_NCC" ng-disabled=disabled><br>
+                      </div>
+                  <div class="form-group">
+                    <label for="tenNCC">Tên Nhà Cung Cấp</label>
+                    <input type="text" class="form-control" name="tenNCC" ng-model="tenNCC"
+                      id="tenNCC" ng-required=true />
+                    <span class="error" ng-show="userForm.tenNCC.$error.required">Vui lòng nhập tên!</span>
+                    <span class="valid" ng-show="userForm.tenNCC.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="sdtNCC">Số Điện Thoại</label>
+                    <input type="text" class="form-control" name="sdtNCC" ng-model="sdtNCC"
+                      id="sdtNCC" ng-required=true />
+                    <span class="error" ng-show="userForm.sdtNCC.$error.required">Vui lòng nhập số điện thoại!</span>
+                    <span class="valid" ng-show="userForm.sdtNCC.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="diachi">Địa Chỉ </label>
+                    <input type="text" class="form-control" name="diachiNCC" ng-model="diachiNCC"
+                      id="diachiNCC" ng-required=true />
+                    <span class="error" ng-show="userForm.diachiNCC.$error.required">Vui lòng nhập địa chỉ!</span>
+                    <span class="valid" ng-show="userForm.diachiNCC.$valid">Hợp Lệ</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="stkNCC">Số Tài Khoản</label>
+                    <input type="text" class="form-control" name="stkNCC" ng-model="stkNCC"
+                      id="stkNCC"  ng-required=true />
+                    <span class="error" ng-show="userForm.stkNCC.$error.required">Vui lòng nhập
+                      Số Tài Khoản!</span>
+                    <span class="valid" ng-show="userForm.stkNCC.$valid">Hợp Lệ</span>
+                    </div>
+                <button type="submit" class="btn btn-primary" ng-if="adding"  ng-disabled="userForm.$invalid" data-dismiss="{{save1}}" 
+                ng-click="addnhacungcap(id_NCC,tenNCC,sdtNCC,diachiNCC,stkNCC)">Thêm</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updatencc(id_NCC,tenNCC,sdtNCC,diachiNCC,stkNCC)">LƯU</button>
+                </form>
+              </div>
+            </form>
+            </div>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+            <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+          </div> -->
+        </div>
+      </div>
+  </div>
+<div class="table-responsive">
+<table class="table table-bordered border-warning" id="accordion">
+  <thead>
+    <tr class="table-info">
+      <th scope="col">ID</th>
+      <th scope="col">Tên Nhà Cung Cấp</th>
+      <th scope="col">Số Điện Thoại</th>
+      <th colspan="3" scope="col"></th>
+  </tr>
+</thead>
+<tbody ng-repeat="x in nhacungcaps | orderBy: 'id_NCC' | filter: search"> 
+  <!--  sua cai ng-repeat owrw trên . thay sau in -->
+  <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_NCC}}" aria-expanded="true" aria-controls="{{x.id_NCC}}">
+    <td>{{x.id_NCC}}</td>
+    <td>{{x.tenNCC}}</td>
+    <td>{{x.sdtNCC}}</td>
+    <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editnhacungcap(x)"><i class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+    <td class="text-center"><button ng-click="deletenhacungcap(x)"><i class="fas fa-trash-alt bg-danger p-2 text-white rounded" ></i></button></td>
+  </tr>
+  <tr id="{{x.id_NCC}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+    <td colspan="9">
+      <table width="100%">
+          <tr>
+            <th scope="col" style="width: 50%">ID Nhà Cung Cấp</th>
+            <td>{{x.id_NCC}}</td>
+          </tr>
+          <tr>
+            <th scope="col" style="width: 50%">Tên Nhà Cung Cấp</th>
+            <td>{{x.tenNCC}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Điện Thoại</th>
+            <td>{{x.sdtNCC}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Địa Chỉ</th>
+            <td>{{x.diachiNCC}}</td>
+          </tr>
+          <tr>
+            <th scope="col">Số Tài Khoản</th>
+            <td>{{x.stkNCC}}</td>
+          </tr>
+      </table>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>

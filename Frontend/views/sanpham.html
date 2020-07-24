@@ -1,0 +1,162 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ SẢN PHẨM</h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="themSanPham()">+
+  Thêm</button>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="userForm" ng-submit="submitForm()" novalidate>
+          <div class="card-body">
+            <!-- xho nY -->
+            <form class="forms-sample">
+              <div class="form-group">
+                <label for="id_SP" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_SP" id="id_SP" ng-model="id_SP"
+                  ng-disabled=disabled><br>
+              </div>
+              <div class="form-group">
+                <label for="soluong">Tên Sản Phẩm </label>
+                <input type="text" class="form-control" name="tenSP" ng-model="tenSP" id="tenSP" />
+
+              </div>
+              <div class="form-group">
+                <label for="nhacungcap">Nhà Cung Cấp</label>
+                <select class="form-control" name="id_NCC" id="id_NCC" ng-model="id_NCC" ng-change="FuncVung(id_NCC)">
+                  <option ng-repeat="nhacungcap in nhacungcaps | orderBy: 'tenNCC'" value="{{nhacungcap.id_NCC}}">
+                    {{nhacungcap.tenNCC}}</option>
+                </select><br>
+
+              </div>
+              <div class="form-group">
+                <label for="soluong">Số Lượng</label>
+                <input type="text" class="form-control" name="soluong_SP" ng-model="soluong_SP" id="soluong_SP" />
+
+              </div>
+              <div class="form-group">
+                <label for="giaban">Giá Bán</label>
+                <input type="text" class="form-control" name="giaban_SP" ng-model="giaban_SP" id="giaban_SP" />
+
+              </div>
+              <div class="form-group">
+                <label>Ngày Nhập</label>
+                <input class="form-control" type="date" name="ngaynhap_ma" ng-model="ngaynhap_ma"/>
+
+              </div>
+              <div class="form-group">
+                <label>Ngày Sản Xuất</label>
+                  <input class="form-control" type="date" name="ngaysx_SP" ng-model="ngaysx_SP"/>
+
+              </div>
+              <div class="form-group">
+                <label>Hạn Sử Dụng</label>
+                <input class="form-control" type="date" name="hansd_SP" ng-model="hansd_SP">
+
+              </div>
+
+              <div class="form-group">
+                <label for="phanloai">Phân Loại</label>
+                <select class="form-control" name="id_LSP" id="id_LSP" ng-model="id_LSP">
+                  <option ng-repeat="phanloai in phanloais | orderBy: 'tenLSP'" value="{{phanloai.id_LSP}}">
+                    {{phanloai.tenLSP}}</option>
+                </select><br>
+              </div>
+
+              <img src="../images/sanphams/{{hinhanh_SP}}" style="width:100px;height:108px;"><br><br>
+              <input type="file" id="imgProduct" name="imgProduct">
+
+              <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" data-dismiss="{{save1}}"
+                ng-click="addsanpham(id_SP,tenSP,id_NCC,soluong_SP,giaban_SP,ngaynhap_ma,ngaysx_SP,hansd_SP,id_LSP,hinhanh)">Thêm</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying"
+                ng-click="updatesanpham(id_SP,tenSP,id_NCC,soluong_SP,giaban_SP,ngaynhap_ma,ngaysx_SP,hansd_SP,id_LSP)">LƯU</button>
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+            <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+          </div> -->
+  </div>
+</div>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered border-warning" id="accordion">
+    <thead>
+      <tr class="table-info">
+        <th>Hình ảnh</th>
+        <th scope="col">ID</th>
+        <th scope="col">Tên Sản Phẩm</th>
+        <th scope="col">Nhà Cung Cấp</th>
+      
+        <th colspan="3" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="x in sanphams | orderBy: 'id_SP' | filter: search">
+      <!--  sua cai ng-repeat owrw trên . thay sau in -->
+      <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_SP}}" aria-expanded="true"
+        aria-controls="{{x.id_SP}}">
+        <td style="width:6.25em;height:6.25em;"><img ng-src="../images/sanphams/{{x.hinhanh_SP}}"
+            style="width:6.25em;height:6.25em;"></td>
+        <!---->
+        <td>{{x.id_SP}}</td>
+        <td>{{x.tenSP}}</td>
+        <td>{{x.nhacungcap.tenNCC}}</td>
+      
+        <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editsanpham(x)"><i
+              class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+        <!-- dòng trên -->
+        <td class="text-center"><button ng-click="deletesanpham(x)"><i
+              class="fas fa-trash-alt bg-danger p-2 text-white rounded"></i></button></td>
+      </tr>
+      <tr id="{{x.id_SP}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <td colspan="9">
+          <table width="100%">
+            <tr>
+              <th scope="col" style="width: 50%">Sản Phẩm</th>
+              <td>{{x.tenSP}}</td>
+            </tr>
+            <tr>
+              <th scope="col" style="width: 50%">Nhà Cung Cấp</th>
+              <td>{{x.nhacungcap.tenNCC}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Số Lượng</th>
+              <td>{{x.soluong_SP}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Giá Bán</th>
+              <td>{{x.giaban_SP}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Ngày nhập</th>
+              <td>{{x.ngaynhap_ma | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Ngày sản Xuất</th>
+              <td>{{x.ngaysx_SP | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Hạn sử dụng</th>
+              <td>{{x.hansd_SP | date:'dd-MM-yyyy'}}</td>
+            </tr>
+
+            <tr>
+              <th scope="col">Loại sản phẩm</th>
+              <td>{{x.phanloai.tenLSP}}</td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

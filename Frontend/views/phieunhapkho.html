@@ -1,0 +1,189 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ PHIẾU NHẬP KHO</h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="createPhieuNhapKho()">+
+  Thêm</button>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="userForm" ng-submit="submitForm()" novalidate>
+          <div class="card-body">
+            <form class="forms-sample">
+              <div class="form-group">
+                <label for="id_PN" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_PN" id="id_PN" ng-model="id_PN"
+                  ng-disabled=disabled><br>
+              </div>
+              <div class="form-group">
+                <label for="tenPN">Tên Phiếu Nhập</label>
+                <input type="text" class="form-control" name="tenPN" ng-model="tenPN" id="tenPN" ng-required=true />
+                <span class="error" ng-show="userForm.tenPN.$error.required">Vui lòng nhập tên!</span>
+                <span class="valid" ng-show="userForm.tenPN.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label for="sanpham">Sản Phẩm</label>
+                <select class="form-control" name="id_SP" id="id_SP" ng-model="id_SP">
+                  <option ng-repeat="sanpham in sanphams | orderBy: 'tenSP'" value="{{sanpham.id_SP}}">{{sanpham.tenSP}}
+                  </option>
+                </select><br>
+                <span class="error" ng-show="userForm.id_SP.$error.required">Vui lòng chọn sản phẩm!</span>
+                <span class="valid" ng-show="userForm.id_SP.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label for="nhanvien">Nhân Viên</label>
+                <select class="form-control" name="id_NV" id="id_NV" ng-model="id_NV">
+                  <option ng-repeat="nhanvien in nhanviens | orderBy: 'tenNV'" value="{{nhanvien.id_NV}}">
+                    {{nhanvien.tenNV}}</option>
+                </select><br>
+                <span class="error" ng-show="userForm.id_NV.$error.required">Vui lòng chọn nhân viên!</span>
+                <span class="valid" ng-show="userForm.id_NV.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label for="soluong">Số Lượng</label>
+                <input type="text" class="form-control" name="soluong" ng-model="soluong" id="soluong"
+                  ng-required=true />
+                <span class="error" ng-show="userForm.soluong.$error.required">Vui lòng nhập
+                  số lượng!</span>
+                <span class="valid" ng-show="userForm.soluong.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label for="gianhap">Giá Nhập</label>
+                <input type="text" class="form-control" name="gianhap" ng-model="gianhap" id="gianhap"
+                  ng-required=true />
+                <span class="error" ng-show="userForm.gianhap.$error.required">Vui lòng nhập
+                  giá!</span>
+                <span class="valid" ng-show="userForm.gianhap.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label>Ngày Nhập</label>
+                <input class="form-control" type="date" name="mangaynhap" ng-model="mangaynhap" ng-required=true>
+                <span class="error" ng-show="userForm.mangaynhap.$error.required">Vui lòng chọn ngày</span>
+                <span class="valid" ng-show="userForm.mangaynhap.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label>Ngày Sản Xuất </label>
+                <input class="form-control" type="date" name="ngaysx" ng-model="ngaysx">
+
+              </div>
+              <div class="form-group">
+                <label>Hạn Sử Dụng</label>
+                <input class="form-control" type="date" name="hansd" ng-model="hansd">
+              </div>
+
+              <div class="form-group">
+                <label for="nhacungcap">Mã Nhà Cung Cấp</label>
+                <select class="form-control" name="id_NCC" id="id_NCC" ng-model="id_NCC">
+                  <option ng-repeat="nhacungcap in nhacungcaps | orderBy: 'tenNCC'" value="{{nhacungcap.id_NCC}}">
+                    {{nhacungcap.tenNCC}}</option>
+                </select><br>
+                <span class="error" ng-show="userForm.id_NCC.$error.required">Vui lòng chọn mã!</span>
+                <span class="valid" ng-show="userForm.id_NCC.$valid">Hợp Lệ</span>
+              </div>
+              <div class="form-group">
+                <label for="phanloai">Mã Loại Sản Phẩm</label>
+                <select class="form-control" name="id_LSP" id="id_LSP" ng-model="id_LSP">
+                  <option ng-repeat="phanloai in phanloais | orderBy: 'tenLSP'" value="{{phanloai.id_LSP}}">
+                    {{phanloai.tenLSP}}</option>
+                </select><br>
+                <span class="error" ng-show="userForm.id_LSP.$error.required">Vui lòng chọn mã!</span>
+                <span class="valid" ng-show="userForm.id_LSP.$valid">Hợp Lệ</span>
+              </div>
+              <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" data-dismiss="{{save1}}"
+                ng-if="!modifying"
+                ng-click="addphieunhapkho(id_PN,tenPN,id_SP,id_NV,soluong,gianhap,mangaynhap,hansd,ngaysx,id_NCC,id_LSP)">Thêm</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying"
+                ng-click="updatephieunhapkho(id_PN,tenPN,id_SP,id_NV,soluong,gianhap,mangaynhap,hansd,ngaysx,id_NCC,id_LSP)">LƯU</button>
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered border-warning" id="accordion">
+    <thead>
+      <tr class="table-info"></tr>
+      <th scope="col">ID </th>
+      <th scope="col">Tên Phiếu Nhập</th>
+      <th scope="col">Sản Phẩm</th>
+      <th scope="col">Nhà Cung Cấp</th>
+      <th scope="col">Ngày Nhập</th>
+      <th colspan="3" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="x in phieunhapkhos | orderBy: 'id_PN' | filter: search">
+      <!--  sua cai ng-repeat owrw trên . thay sau in -->
+      <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_PN}}" aria-expanded="true"
+        aria-controls="{{x.id_PN}}">
+        <td>{{x.id_PN}}</td>
+        <td>{{x.tenPN}}</td>
+        <td>{{x.sanpham.tenSP}}</td>
+        <td>{{x.nhacungcap.tenNCC}}</td>
+        <td>{{x.mangaynhap}}</td>
+        <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editphieunhapkho(x)"><i
+              class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+        <td class="text-center"><button ng-click="deletephieunhapkho(x)"><i
+              class="fas fa-trash-alt bg-danger p-2 text-white rounded"></i></button></td>
+      </tr>
+      <tr id="{{x.id_PN}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <td colspan="9">
+          <table width="100%">
+            <tr>
+              <th scope="col" style="width: 50%">ID Phiếu Nhập</th>
+              <td>{{x.id_PN}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Tên Phiếu Nhập </th>
+              <td>{{x.tenPN}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Sản Phẩm </th>
+              <td>{{x.sanpham.tenSP}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Nhân Viên</th>
+              <td>{{x.nhanvien.tenNV}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Số Lượng </th>
+              <td>{{x.soluong}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Giá Nhập</th>
+              <td>{{x.gianhap}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Ngày nhập</th>
+              <td>{{x.mangaynhap | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Ngày Sản Xuất </th>
+              <td>{{x.ngaysx | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Hạn Sử Dụng</th>
+              <td>{{x.hansd| date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Mã Nhà Cung Cấp </th>
+              <td>{{x.nhacungcap.id_NCC}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Mã Loại sản phẩm</th>
+              <td>{{x.phanloai.id_LSP}}</td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

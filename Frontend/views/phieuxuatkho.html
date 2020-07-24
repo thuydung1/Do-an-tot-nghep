@@ -1,0 +1,225 @@
+<h3><i class="fas fa-book ml-2"></i> QUẢN LÍ PHIẾU XUẤT KHO</h3>
+<hr>
+<button class="btn btn-primary mb-4 ml-2" data-toggle="modal" data-target="#addModal" ng-click="themPhieuXuat()">+
+  Thêm</button>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" style="min-width: 700px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="userForm" ng-submit="submitForm()" novalidate>
+          <div class="card-body">
+            <form class="forms-sample">
+              <div class="form-group">
+                <label for="id_PX" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" name="id_PX" id="id_PX" ng-model="phieuxuatkho.id_PX"
+                  ng-disabled=disabled><br>
+              </div>
+              <div class="form-group">
+                <label for="tenPX">Tên Phiếu Xuất</label>
+                <input type="text" class="form-control" name="tenPX" ng-model="phieuxuatkho.tenPX" id="tenPX"
+                  ng-required=true />
+                <span class="error" ng-show="userForm.tenPX.$error.required">Vui lòng nhập tên!</span>
+                <span class="valid" ng-show="userForm.tenPX.$valid">Hợp Lệ</span>
+              </div>
+              <div>
+                <div><label>Sản Phẩm</label></div>
+                <div class="form-group" style="display: flex;justify-content: space-between;"
+                  ng-repeat="sanphamDto in phieuxuatkho.sanphamsDto">
+                  <div style="margin-right: 10px;">
+                    <select class="form-control" name="sanphamDto.id_SP" ng-model="sanphamDto.id_SP" ng-required=true>
+                      <option ng-repeat="sanpham in sanphams | orderBy: 'tenSP'" value="{{sanpham.id_SP}}">
+                        {{sanpham.tenSP}}</option>
+                    </select><br>
+                    <span class="error" ng-show="userForm.id_SP.$error.required">Vui lòng chọn sản phẩm!</span>
+                    <span class="valid" ng-show="userForm.id_SP.$valid">Hợp Lệ</span>
+                  </div>
+                  <div style="margin-right: 10px;">
+                    <input type="number" required class="form-control" name="sanphamDto.giaban"
+                      ng-model="sanphamDto.giaban" placeholder="Giá bán" />
+                  </div>
+                  <div>
+                    <input type="number" class="form-control" name="sanphamDto.soluong" ng-model="sanphamDto.soluong"
+                      placeholder="Số lượng" required />
+                  </div>
+                </div>
+                <div>
+                  <input type="button" value="+" ng-click="themSanPham()" />
+                </div>
+                <div class="form-group">
+                  <label for="nhanvien">Nhân Viên</label>
+                  <select class="form-control" name="id_NV" id="id_NV" ng-model="phieuxuatkho.id_NV">
+                    <option ng-repeat="nhanvien in nhanviens | orderBy: 'tenNV'" value="{{nhanvien.id_NV}}">
+                      {{nhanvien.tenNV}}</option>
+                  </select><br>
+                  <span class="error" ng-show="userForm.id_NV.$error.required">Vui lòng chọn nhân viên!</span>
+                  <span class="valid" ng-show="userForm.id_NV.$valid">Hợp Lệ</span>
+                </div>
+                <div class="form-group">
+                  <label for="khachhang">Khách Hàng</label>
+                  <select class="form-control" name="id_KH" id="id_KH" ng-model="phieuxuatkho.id_KH">
+                    <option ng-repeat="khachhang in khachhangs | orderBy: 'tenKH'" value="{{khachhang.id_KH}}">
+                      {{khachhang.tenKH}}</option>
+                  </select><br>
+                  <span class="error" ng-show="userForm.id_KH.$error.required">Vui lòng chọn nhà cung cấp!</span>
+                  <span class="valid" ng-show="userForm.id_KH.$valid">Hợp Lệ</span>
+                </div>
+                <div class="form-group">
+                  <label>Ngày Xuất Sản Phẩm</label>
+                  <input class="form-control" type="date" name="ngayxuat" ng-model="phieuxuatkho.ngayxuat"
+                    ng-required=true>
+                  <span class="error" ng-show="userForm.ngayxuat.$error.required">Vui lòng chọn ngày</span>
+                  <span class="valid" ng-show="userForm.ngayxuat.$valid">Hợp Lệ</span>
+                </div>
+                <div class="form-group">
+                  <label for="diachi">Đia Chỉ </label>
+                  <input type="text" class="form-control" name="diachi" ng-model="phieuxuatkho.diachi" id="diachi"
+                    ng-required=true />
+                  <span class="error" ng-show="userForm.diachi.$error.required">Vui lòng nhập
+                    địa chỉ!</span>
+                  <span class="valid" ng-show="userForm.diachi.$valid">Hợp Lệ</span>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" data-dismiss="{{save1}}"
+                  ng-click="addphieuxuatkho(phieuxuatkho)">Lưu</button>
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ĐÓNG</button>
+            <button type="button" class="btn btn-primary" data-dismiss="{{save1}}" ng-if="adding" ng-click="addBookTitle(id_ISBN, id_LoaiSach, id_NXB, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="{{save2}}" ng-if="modifying" ng-click="updateBookTitle(id_ISBN, id_LoaiSach, tenDS, tomLuocNoiDung, khoSach, soTrang, dinhKem, viTri, ngonNgu, phienBan, namXuatBan)">LƯU</button>
+          </div> -->
+  </div>
+</div>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered border-warning" id="accordion">
+    <thead>
+      <tr class="table-info">
+        <th scope="col">ID Phiếu Xuất</th>
+        <th scope="col"> Danh sách sản phẩm xuất (Tên - Giá bán -Số lượng)</th>
+        <th scope="col">Khách Hàng</th>
+        <th scope="col">Nhân Viên</th>
+        <th colspan="3" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="x in phieuxuatkhos | orderBy: 'id_PX' | filter: search">
+      <!--  sua cai ng-repeat owrw trên . thay sau in -->
+      <tr class="card-header" id="heading" data-toggle="collapse" data-target="#{{x.id_PX}}" aria-expanded="true"
+        aria-controls="{{x.id_PX}}">
+        <td>{{x.id_PX}}</td>
+        <td style="padding: 0;">
+          <table style="width: 100%;">
+            <tr ng-repeat="y in x.phieuXuatKhoSanPhams">
+              <td>{{ y.sanpham.tenSP }}</td>
+              <td>{{ y.giaban }} VND</td>
+              <td>{{ y.soluong }}</td>
+            </tr>
+          </table>
+        </td>
+        <td>{{x.khachhang.tenKH}}</td>
+        <td>{{x.nhanvien.tenNV}}</td>
+        <td class="text-center"><button data-toggle="modal" data-target="#addModal" ng-click="editphieuxuatkho(x)"><i
+              class="fas fa-edit bg-warning p-2 text-white rounded"></i></button></td>
+        <td class="text-center"><button ng-click="deletephieuxuatkho(x)"><i
+              class="fas fa-trash-alt bg-danger p-2 text-white rounded"></i></button></td>
+      </tr>
+      <tr id="{{x.id_PX}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <td colspan="9">
+          <table width="100%">
+            <tr>
+              <th scope="col" style="width: 30%">ID Phiếu Xuất</th>
+              <td>{{x.id_PX}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Tên Phiếu Xuất</th>
+              <td>{{x.tenPX}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Danh sách sản phẩm xuất</th>
+              <td>
+                <table style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th rowspan="2" scope="col">STT</th>
+                      <th rowspan="2" scope="col"> Tên sản phẩm</th>
+                      <th rowspan="2" scope="col">Mã sản phẩm</th>
+                      <th colspan="2" scope="col">Số lượng</th>
+                      <th rowspan="2" scope="col"> Đơn giá</th>
+                    </tr>
+                    <tr>
+                      <th scope="col"> Yêu cầu</th>
+                      <th scope="col">Thực xuất</th>
+                    </tr>
+                  </thead>
+                  <tr ng-repeat="y in x.phieuXuatKhoSanPhams">
+                    <td>{{ $index + 1}}</td>
+                    <td>{{ y.sanpham.tenSP }}</td>
+                    <td>{{ y.sanpham.id_SP }}</td>
+                    <td>{{ y.soluong }}</td>
+                    <td>{{ y.soluong }}</td>
+                    <td>{{ y.giaban }} VND</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <th scope="col">Nhân Viên</th>
+              <td>{{x.nhanvien.tenNV}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Khách Hàng</th>
+              <td>
+                <table style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th scope="col">Tên khách hàng</th>
+                      <th scope="col"> Địa chỉ</th>
+                      <th scope="col">Số điện thoại</th>
+                      <th scope="col">Số tài khoản ngân hàng</th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td>{{x.khachhang.tenKH }}</td>
+                    <td>{{x.khachhang.diachiKH }}</td>
+                    <td>{{x.khachhang.sdtKH }}</td>
+                    <td>{{x.khachhang.stkKH }}</td>
+                  </tr>
+                </table>
+                <div></div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="col">Địa Chỉ</th>
+              <td>{{x.diachi}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Ngày xuất sản phẩm</th>
+              <td>{{x.ngayxuat | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="col">Tổng tiền hàng</th>
+              <td>{{x.tongTien}} VND</td>
+            </tr>
+            <tr>
+              <th scope="col">Chiết khấu (2% cho hóa đơn từ 10tr)</th>
+              <td>{{x.chieuKhau}} %</td>
+            </tr>
+            <tr>
+              <th scope="col">Tổng tiền thanh toán</th>
+              <td>{{x.tongThanhToan}} VND</td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

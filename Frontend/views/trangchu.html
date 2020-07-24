@@ -1,0 +1,107 @@
+<style>
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Tổng quan<small
+                            ng-class="{green: tongquan.lai >0, red: tongquan.lai <=0}">(
+                            {{tongquan.lai | currency:""}} VNĐ
+                            )</small></h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Phiếu nhập</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Tổng số phiếu nhập</span>
+                                    <span class="text-muted">Tổng tiền nhập</span>
+                                </p>
+                                <p class="ml-auto d-flex flex-column text-right">
+                                    <span class="text-bold text-lg">{{tongquan.tongSoNhapKho}} phiếu</span>
+                                    <span class="text-success">
+                                        <i class="fas fa-arrow-up"></i> {{tongquan.tongSoTienNhapKho | currency:""}} VNĐ
+                                    </span>
+
+                                </p>
+                            </div>
+                            <!-- /.d-flex -->
+
+                            <div class="position-relative mb-4">
+                                <canvas id="visitors-chart" height="200"></canvas>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-end">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                    
+                    <!-- /.card -->
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Phiếu xuất</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Tổng số phiếu xuất</span>
+                                    <span class="text-muted">Tổng doanh thu</span>
+                                </p>
+                                <p class="ml-auto d-flex flex-column text-right">
+                                    <span class="text-bold text-lg">{{tongquan.tongSoXuatKho}} Phiếu</span>
+                                    <span class="text-success">
+                                        <i class="fas fa-arrow-up"></i> {{tongquan.tongSoTienXuatKho | currency:""}} VNĐ
+                                    </span>
+                                </p>
+                            </div>
+                            <!-- /.d-flex -->
+
+                            <div class="position-relative mb-4">
+                                <canvas id="sales-chart" height="200"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                   
+                </div>
+                <!-- /.col-md-6 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- Main Footer -->
